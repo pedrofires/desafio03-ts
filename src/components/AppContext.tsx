@@ -1,31 +1,23 @@
-import { createContext, useEffect, useState } from "react"
-import { getAllLocalStorage } from "../services/storage"
+import { createContext, useEffect, useState } from "react";
+import { getAllLocalStorage } from "../services/storage";
+import { IDIoBank } from "../models/IDioBank";
 
 interface IAppContext {
-    user: string,
-    isLoggedIn: boolean,
-    setIsLoggedIn: (isLoggedIn: boolean) => void
+  user: IDIoBank | undefined;
 }
-  
-export const AppContext = createContext({} as IAppContext)
-  
+
+export const AppContext = createContext({} as IAppContext);
+
 export const AppContextProvider = ({ children }: any) => {
-    const [ isLoggedIn, setIsLoggedIn ] = useState<boolean>(false)
+  const [user, setUser] = useState<IDIoBank>();
+  const myCredentials = getAllLocalStorage();
 
-    const storage = getAllLocalStorage()
+  useEffect(() => {
+    if (myCredentials) {
+      const userData = JSON.parse(myCredentials);
+      setUser(userData);
+    }
+  }, [myCredentials]);
 
-    useEffect(() => {
-      if(storage){
-        const { login } = JSON.parse(storage)
-        setIsLoggedIn(login)
-      }
-    }, [])
-
-    const user = 'nathally'
-  
-    return (
-      <AppContext.Provider value={{ user, isLoggedIn, setIsLoggedIn }}>
-        { children }
-      </AppContext.Provider>
-    )
-}
+  return <AppContext.Provider value={{ user }}>{children}</AppContext.Provider>;
+};

@@ -1,22 +1,23 @@
-import { Button } from "@chakra-ui/react"
-import { MouseEventHandler } from "react"
+import { Button } from "@chakra-ui/react";
+import { MouseEventHandler } from "react";
 
 interface IDButton {
-    onClick: MouseEventHandler
+  onClick: MouseEventHandler;
 }
 
 export const DButton = ({ onClick }: IDButton) => {
-    return(
-        <Button
-          onClick={onClick}
-          colorScheme="teal"
-          size="sm"
-          width="100%"
-          marginTop="5px"
-        >
-          Entrar
-        </Button>
-    )
-}
+  return (
+    <Button
+      onClick={onClick}
+      colorScheme="teal"
+      size="sm"
+      width="100%"
+      marginTop="5px"
+      type="submit"
+    >
+      Entrar
+    </Button>
+  );
+};
 
-export default DButton
+export default DButton;
